@@ -3,3 +3,219 @@ body {
   padding: 0;
   margin: 0;
 }
+
+/* styles.css */
+
+/* Gruvbox Color Palette - Dark Theme */
+
+/* Base Colors */
+:root {
+  /* Background and Foreground Colors */
+  --color-bg-dark: #1e1e1e; /* Dark background */
+  --color-bg-light: #f8f4cd; /* Light background (lighter color for highlights) */
+  --color-bg-alt: #2e2a29; /* Alternative background color */
+  --color-bg-secondary: #23272d; /* Secondary dark background */
+
+  --color-text-dark: #fbf1c7; /* Text color on dark background */
+  --color-text-light: #212121; /* Text color on light background */
+
+  /* Accent and Highlight Colors */
+  --color-primary: #4caf50; /* Green primary color */
+  --color-secondary: #ffc107; /* Yellow accent */
+  --color-accent: #9d28/07; /* Orange accent (highlight) */
+  --color-alert: #f73028; /* Red alert color */
+  --color-link: #719586; /* Link text color */
+
+  /* Gruvbox Specifics */
+  --color-primary-dark: #388e3c; /* Darker green for hover */
+  --color-secondary-dark: #ffa000; /* Darker yellow for hover */
+
+  /* Tertiary and Non-Essential */
+  --color-tertiary: #c77089; /* Purple tertiary color */
+  --color-light-tertiary: #af9f81; /* Lighter tertiary */
+  --color-muted: #978771; /* Muted color */
+
+  /* Additional Colors */
+  --color-faded: #cbb890; /* Faded or background elements */
+  --color-muted-light: #7f7061; /* Light muted */
+
+  /* Status Colors */
+  --color-success: #aab01e; /* Success state (green) */
+  --color-warning: #f7b125; /* Warning state (yellow) */
+  --color-danger: #fb6a16; /* Danger state (red) */
+  --color-info: #0e5365; /* Info state (blue) */
+
+  /* Miscellaneous */
+  --color-dark-highlight: #890009; /* Dark highlight accent */
+  --color-light-highlight: #66620d; /* Light highlight accent */
+}
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-dark);
+  font-family: Arial, sans-serif; /* Or any preferred font */
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text-dark);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Links */
+a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+/* Paragraphs */
+p {
+  color: var(--color-text-light);
+  margin-bottom: 1rem;
+}
+
+/* Buttons */
+button {
+  background-color: var(--color-primary);
+  color: var(--color-bg-light);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover,
+button:focus {
+  background-color: var(--color-primary-dark);
+}
+
+/* Inputs */
+input,
+textarea {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-dark);
+  border: 1px solid var(--color-bg-secondary);
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/* Cards / Containers */
+.card {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-light);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.card-header {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-dark);
+  padding: 10px;
+  font-size: 1.25rem;
+}
+
+/* Alerts */
+.alert-success {
+  background-color: var(--color-success);
+  color: var(--color-bg-light);
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.alert-warning {
+  background-color: var(--color-warning);
+  color: var(--color-bg-light);
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.alert-danger {
+  background-color: var(--color-danger);
+  color: var(--color-bg-light);
+  padding: 15px;
+  border-radius: 4px;
+}
+
+/* Status Indicators (Icons or small badges) */
+.badge-success {
+  background-color: var(--color-success);
+  color: var(--color-bg-light);
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+.badge-warning {
+  background-color: var(--color-warning);
+  color: var(--color-bg-light);
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+.badge-danger {
+  background-color: var(--color-danger);
+  color: var(--color-bg-light);
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+/* Hover Effects */
+:hover {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Miscellaneous */
+hr {
+  border-color: var(--color-muted-light);
+}
+
+code {
+  background-color: var(--color-bg-alt);
+  color: var(--color-text-light);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+blockquote {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-light);
+  padding: 15px;
+  border-left: 5px solid var(--color-primary);
+  font-style: italic;
+}

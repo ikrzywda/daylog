@@ -1,7 +1,5 @@
 main {
   display: flex;
-  background-color: burlywood;
   align-items: start;
-  height: 100vh;
   justify-content: center;
 }
