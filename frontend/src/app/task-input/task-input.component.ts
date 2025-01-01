@@ -30,11 +30,5 @@ export class TaskInputComponent {
     if (!title || !contents || !duration) {
       return;
     }
-
-    this.taskLogService.addTask({
-      title,
-      contents,
-      durationSeconds: duration,
-    });
   }
 }

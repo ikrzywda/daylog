@@ -4,7 +4,9 @@ from logging import Logger
 from pathlib import Path
 from typing import Any, Final
 from fastapi import Depends, FastAPI
-from pydantic import BaseModel
+from pydantic import AliasChoices, AliasGenerator, BaseModel, ConfigDict
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic.alias_generators import to_camel
 import pydantic
 
 DEFAULT_STORAGE_PATH: Final[Path] = Path(".tasks.json")
@@ -12,12 +14,29 @@ logger = Logger(name="api_logger")
 
 app = FastAPI()
 
-class TaskDraft(BaseModel):
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
+
+class CamelSerializableBaseModel(BaseModel):
+    model_config = ConfigDict(
+        alias_generator=AliasGenerator(
+            validation_alias=lambda field_name: AliasChoices(to_camel(field_name), field_name),
+            serialization_alias=to_camel
+        )
+    )
+
+
+class TaskBase(CamelSerializableBaseModel):
     title: str
     contents: str
     duration_seconds: int
 
-class Task(TaskDraft):
+class Task(TaskBase):
     created_at: str
 
 
@@ -53,7 +72,7 @@ class TaskStorageService:
         with open(self.storage_path, "w") as f:
             f.write(dumped_tasks)
     
-    def create_and_add_task_to_storage(self, draft: TaskDraft) -> Task:
+    def create_and_add_task_to_storage(self, draft: TaskBase) -> Task:
         task = Task(**draft.model_dump(), created_at=datetime.now(tz=timezone.utc).isoformat())
         self.tasks.append(task)
         self._save_to_storage()
@@ -71,7 +90,7 @@ async def get_tasks(
 
 @app.post("/tasks", response_model=Task)
 async def create_task(
-    payload: TaskDraft,
+    payload: TaskBase,
     task_storage_service: TaskStorageService = Depends(get_task_storage_service_dep)
 ) -> Task:
     return task_storage_service.create_and_add_task_to_storage(payload)

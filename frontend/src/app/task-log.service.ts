@@ -1,21 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Task, TaskDraft } from './task';
+import {
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { catchError, map, Observable, of, startWith } from 'rxjs';
+import { Task } from './task';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskLogService {
-  private taskList: Task[];
+  private http = inject(HttpClient);
 
-  constructor() {
-    this.taskList = [];
-  }
-
-  addTask(taskDraft: TaskDraft) {
-    this.taskList.push({ ...taskDraft, createdAt: new Date() });
-  }
-
-  getTasks(): Task[] {
-    return this.taskList;
-  }
+  tasks$: Observable<Task[] | null> = this.http
+    .get('http://localhost:4101/tasks')
+    .pipe(
+      map((data) => data as Task[]),
+      catchError((error) => of(error)),
+      startWith([])
+    );
 }
