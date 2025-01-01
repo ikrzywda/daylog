@@ -1,0 +1,6 @@
+<div>
+  <app-task-input />
+  <li *ngFor="let task of taskLogService.getTasks()">
+    {{ task.title }}
+  </li>
+</div>

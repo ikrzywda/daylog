@@ -1,0 +1,9 @@
+<div>
+  <p>Input your task</p>
+  <form [formGroup]="taskFormGroup" (submit)="handleSubmitTask()">
+    <input type="text" formControlName="title" />
+    <input type="text" formControlName="contents" />
+    <input type="number" formControlName="duration" />
+    <button type="submit" [disabled]="!taskFormGroup.valid">Submit task</button>
+  </form>
+</div>
