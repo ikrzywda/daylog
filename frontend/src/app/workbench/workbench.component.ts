@@ -1,9 +1,8 @@
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskInputComponent } from '../task-input/task-input.component';
 import { TaskLogService } from '../task-log.service';
-import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-workbench',
