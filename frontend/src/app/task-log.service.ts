@@ -12,7 +12,6 @@ export class TaskLogService {
 
   taskAdded$ = new Subject<void>();
 
-  // tasks$: Observable<Task[] | null> = this.http.get<Task[]>(this.route);
   tasks$: Observable<Task[] | null> = this.taskAdded$.pipe(
     startWith([]),
     switchMap(() => this.http.get<Task[]>(this.route))

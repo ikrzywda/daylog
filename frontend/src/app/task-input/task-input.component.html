@@ -1,9 +1,27 @@
 <div>
   <p>Input your task</p>
   <form [formGroup]="taskFormGroup" (submit)="handleSubmitTask()">
-    <input type="text" formControlName="title" />
-    <input type="text" formControlName="contents" />
-    <input type="number" formControlName="duration" />
-    <button type="submit" [disabled]="!taskFormGroup.valid">Submit task</button>
+    <div class="text-field">
+      <div class="header-input">
+        <input
+          class="inline-text-field"
+          type="text"
+          formControlName="title"
+          placeholder="Title"
+        />
+        <input
+          type="text"
+          formControlName="duration"
+          placeholder="1h 20m"
+          class="inline-text-field"
+        />
+      </div>
+      <textarea
+        type="text"
+        formControlName="contents"
+        placeholder="Jot down what you did"
+        class="inline-text-area"
+      ></textarea>
+    </div>
   </form>
 </div>
