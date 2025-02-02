@@ -32,6 +32,7 @@ class CamelSerializableBaseModel(BaseModel):
 
 
 class TaskBase(CamelSerializableBaseModel):
+    id: int
     title: str
     contents: str
     duration_seconds: int

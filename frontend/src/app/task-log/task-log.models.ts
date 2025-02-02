@@ -14,7 +14,7 @@ export interface Task {
   createdAt: Date;
 }
 
-export type TaskDraft = Omit<Task, 'id'>;
+export type TaskDraft = Omit<Task, 'id' | 'createdAt'>;
 export type TaskUpdate = Partial<TaskDraft>;
 
 export interface TaskSearchQuery {

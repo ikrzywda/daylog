@@ -15,6 +15,7 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { routes } from './app.routes';
 import { metaReducers, reducers } from './reducers';
 import * as taskLogEffects from './task-log/store/task-log.effects';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +24,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore(reducers, { metaReducers }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects(taskLogEffects),
+    provideEffects(taskLogEffects), provideAnimationsAsync(),
   ],
 };
