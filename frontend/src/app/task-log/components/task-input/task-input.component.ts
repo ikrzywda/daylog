@@ -40,38 +40,56 @@ type TaskDraftFormGroupResult = Partial<{
   styleUrl: './task-input.component.scss',
 })
 export class TaskInputComponent {
-  @Input({ required: true }) taskDraft: TaskDraft = {
-    title: '',
-    contents: '',
-    durationSeconds: 0,
-  };
+  @Input({ required: true }) taskDraft: TaskDraft | undefined = undefined;
   @Output() taskDraftChange = new EventEmitter<TaskDraft>();
+  taskInputFormGroup: FormGroup<TaskDraftFormGroup>;
 
-  constructor(private destroyRef: DestroyRef) {}
+  constructor(private destroyRef: DestroyRef) {
+    console.log('DRAFT', this.taskDraft);
+    this.taskInputFormGroup = this.initializeInputFormGroup();
+    this.initializeDataUpdateSubscription();
+  }
 
-  taskInputFormGroup = new FormGroup<TaskDraftFormGroup>({
-    title: new FormControl(this.taskDraft.title, Validators.minLength(1)),
-    contents: new FormControl(this.taskDraft.contents, Validators.minLength(1)),
-    durationSeconds: new FormControl(
-      this.taskDraft.durationSeconds.toString(),
-      Validators.pattern('^(0|[1-9][0-9]*)$')
-    ),
-  });
+  ngOnInit() {
+    console.log('INIT', this.taskDraft);
+    this.taskInputFormGroup = this.initializeInputFormGroup();
+    this.initializeDataUpdateSubscription();
+  }
 
-  valueChangesSubscription$ = this.taskInputFormGroup.valueChanges
-    .pipe(
-      debounceTime(100),
-      distinctUntilChanged(),
-      map((draftContents) => {
-        const draft = this.validateInput(draftContents);
-        if (draft) {
-          console.log('DARFT', draft);
-          this.taskDraftChange.emit(draft);
-        }
-      }),
-      takeUntilDestroyed(this.destroyRef)
-    )
-    .subscribe();
+  private initializeInputFormGroup(): FormGroup<TaskDraftFormGroup> {
+    console.log('UPDATE');
+    return new FormGroup<TaskDraftFormGroup>({
+      title: new FormControl(
+        this.taskDraft?.title ?? '',
+        Validators.minLength(1)
+      ),
+      contents: new FormControl(
+        this.taskDraft?.contents ?? '',
+        Validators.minLength(1)
+      ),
+      durationSeconds: new FormControl(
+        this.taskDraft?.durationSeconds.toString() ?? '',
+        Validators.pattern('^(0|[1-9][0-9]*)$')
+      ),
+    });
+  }
+
+  private initializeDataUpdateSubscription() {
+    this.taskInputFormGroup.valueChanges
+      .pipe(
+        debounceTime(100),
+        distinctUntilChanged(),
+        map((draftContents) => {
+          const draft = this.validateInput(draftContents);
+          if (draft) {
+            console.log('DARFT', draft);
+            this.taskDraftChange.emit(draft);
+          }
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
+  }
 
   validateInput(
     taskDraftFormGroup: TaskDraftFormGroupResult

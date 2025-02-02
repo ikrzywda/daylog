@@ -1,6 +1,10 @@
-<mat-list class="task-list-item" *ngFor="let task of (tasks$ | async) || []">
-  <mat-list-item (click)="handleClick(task.id)">
-    <h3 matListItemTitle>{{ task.title }}</h3>
-    <span matListItemLine>took: {{ task.durationSeconds }}</span>
-  </mat-list-item>
-</mat-list>
+<mat-action-list
+  class="task-list-item"
+  *ngFor="let task of (tasks$ | async) || []"
+>
+  <app-task-list-item
+    [task]="task"
+    (onDelete)="handleDelete(task.id)"
+    (onEdit)="handleEdit(task)"
+  />
+</mat-action-list>

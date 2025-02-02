@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  Inject,
   inject,
   model,
 } from '@angular/core';
@@ -29,9 +30,11 @@ export class TaskInputDialog {
     contents: '',
     durationSeconds: 0,
   });
-  readonly dialog = inject(MatDialog);
 
-  constructor(private taskLogService: TaskLogService) {}
+  constructor(
+    private taskLogService: TaskLogService,
+    readonly dialog: MatDialog
+  ) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogTaskInputDialogComponent);
@@ -58,8 +61,14 @@ export class TaskInputDialog {
   styleUrl: './task-input-dialog.component.scss',
 })
 export class DialogTaskInputDialogComponent {
-  readonly dialogRef = inject(MatDialogRef<DialogTaskInputDialogComponent>);
-  readonly taskDraft = inject<TaskDraft>(MAT_DIALOG_DATA);
+  taskDraft: TaskDraft;
+  constructor(
+    @Inject(MAT_DIALOG_DATA) private data: TaskDraft,
+    private readonly dialogRef: MatDialogRef<DialogTaskInputDialogComponent>
+  ) {
+    console.log('DATGA', data);
+    this.taskDraft = { ...this.data };
+  }
 
   handleClose() {
     this.dialogRef.close();

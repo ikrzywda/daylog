@@ -5,10 +5,19 @@ import { MatListModule } from '@angular/material/list';
 import { Store } from '@ngrx/store';
 import { TaskLogService } from '../../services/task-log.service';
 import { selectTasks } from '../../store/task-log.selectors';
+import { TaskListItemComponent } from './task-list-item/task-list-item.component';
+import { Task, TaskDraft } from '../../task-log.models';
+import { DialogTaskInputDialogComponent } from '../task-input-dialog/task-input-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-task-list',
-  imports: [CommonModule, MatListModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    MatListModule,
+    MatButtonModule,
+    TaskListItemComponent,
+  ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss',
 })
@@ -16,12 +25,26 @@ export class TaskListComponent {
   tasks$ = this.store.select(selectTasks);
   constructor(
     private readonly store: Store,
-    private taskLogService: TaskLogService
+    private taskLogService: TaskLogService,
+    readonly dialog: MatDialog
   ) {
     this.taskLogService.loadTasks();
   }
 
-  handleClick(taskId: number) {
-    console.log('ADD TASK', taskId);
+  handleEdit(task: Task) {
+    console.log('OPEINING', task);
+    const dialogRef = this.dialog.open(DialogTaskInputDialogComponent, {
+      data: task,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed', result);
+      if (result !== undefined) {
+        console.log('RESULT', result);
+        this.taskLogService.updateTask(task.id, result);
+      }
+    });
   }
+
+  handleDelete(taskId: number) {}
 }

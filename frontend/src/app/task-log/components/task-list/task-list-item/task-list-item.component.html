@@ -1,0 +1,16 @@
+<a mat-list-item>
+  <div class="task-list-item">
+    <div class="header-container">
+      <h3 matListItemTitle>{{ task.title }}</h3>
+      <span matListItemLine>took: {{ task.durationSeconds }}</span>
+    </div>
+    <div class="actions-container">
+      <button mat-icon-button (click)="handleEdit()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="handleDelete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</a>

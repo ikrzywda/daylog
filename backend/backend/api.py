@@ -3,7 +3,7 @@ import json
 from logging import Logger
 from pathlib import Path
 from random import randint
-from typing import Any, Final
+from typing import Any, Final, Optional
 from fastapi import Depends, FastAPI
 from pydantic import AliasChoices, AliasGenerator, BaseModel, ConfigDict
 from fastapi.middleware.cors import CORSMiddleware
@@ -40,6 +40,11 @@ class TaskBase(CamelSerializableBaseModel):
 class Task(TaskBase):
     id: int
     created_at: str
+
+class TaskUpdate(CamelSerializableBaseModel):
+    title: Optional[str]
+    contents: Optional[str]
+    duration_seconds: Optional[int]
 
 
 class TaskStorageService:
@@ -79,6 +84,22 @@ class TaskStorageService:
         self.tasks.append(task)
         self._save_to_storage()
         return task
+    
+    def update_task(self, id: int, update: TaskUpdate) -> Task:
+        print(update)
+        task_to_update = next((task for task in self.tasks if task.id == id), None)
+        if task_to_update is None:
+            raise Exception(f"Did not find task with id {id}")
+        updated_draft = task_to_update.model_dump()
+        for key, value in update.model_dump().items():
+            if key is not None and value is not None:
+                print("UPDATE")
+                updated_draft[key] = value
+
+        updated_task = Task(**updated_draft)
+        print(updated_task)
+        self.tasks = [task if task.id != id else updated_task for task in self.tasks]
+        return updated_task
 
 def get_task_storage_service_dep() -> TaskStorageService:
     return TaskStorageService()
@@ -96,3 +117,11 @@ async def create_task(
     task_storage_service: TaskStorageService = Depends(get_task_storage_service_dep)
 ) -> Task:
     return task_storage_service.create_and_add_task_to_storage(payload)
+
+@app.patch("/tasks/{task_id}", response_model=Task)
+async def update_task(
+    task_id: int,
+    payload: TaskUpdate,
+    task_storage_service: TaskStorageService = Depends(get_task_storage_service_dep)
+) -> Task:
+    return task_storage_service.update_task(task_id, payload)

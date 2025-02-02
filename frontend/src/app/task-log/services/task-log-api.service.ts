@@ -19,4 +19,8 @@ export class TaskLogApiService {
   createTask(draft: TaskDraft): Observable<Task> {
     return this.http.post<Task>(this.route, draft);
   }
+
+  updateTask(taskId: number, update: TaskDraft): Observable<Task> {
+    return this.http.patch<Task>(`${this.route}/${taskId}`, update);
+  }
 }

@@ -1,0 +1,15 @@
+.task-list-item {
+  display: flex;
+  justify-content: space-between; /* Space out title, duration, and actions */
+  align-items: center; /* Vertically center the content */
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.actions-container {
+  display: flex;
+  gap: 8px; /* Add some space between the buttons */
+}

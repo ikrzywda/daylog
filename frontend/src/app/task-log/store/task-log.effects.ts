@@ -45,3 +45,17 @@ export const addTaskEffect = createEffect(
     ),
   { functional: true }
 );
+
+export const updateTaskEffect = createEffect(
+  (actions$ = inject(Actions), taskLogApiService = inject(TaskLogApiService)) =>
+    actions$.pipe(
+      ofType(TaskLogActions.updateTask),
+      exhaustMap(({ taskId, update }) =>
+        taskLogApiService.updateTask(taskId, update).pipe(
+          map((task) => TaskLogActions.didUpdateTask({ taskId, task })),
+          catchError((error: unknown) => EMPTY)
+        )
+      )
+    ),
+  { functional: true }
+);

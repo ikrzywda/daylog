@@ -22,4 +22,8 @@ export class TaskLogService {
   addTask(draft: TaskDraft) {
     this.store.dispatch(TaskLogActions.addTask({ draft }));
   }
+
+  updateTask(taskId: number, update: TaskDraft) {
+    this.store.dispatch(TaskLogActions.updateTask({ taskId, update }));
+  }
 }

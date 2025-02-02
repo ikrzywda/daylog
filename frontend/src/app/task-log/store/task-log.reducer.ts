@@ -35,10 +35,8 @@ export const taskLogReducer = createReducer(
     ...state,
     tasks: state.tasks.filter(({ id }) => id !== taskId),
   })),
-  on(TaskLogActions.didUpdateTask, (state, { taskId, update }) => ({
+  on(TaskLogActions.didUpdateTask, (state, { taskId, task: updatedTask }) => ({
     ...state,
-    tasks: state.tasks.map((task) =>
-      task.id === taskId ? { ...task, update } : task
-    ),
+    tasks: state.tasks.map((task) => (task.id === taskId ? updatedTask : task)),
   }))
 );
