@@ -59,3 +59,17 @@ export const updateTaskEffect = createEffect(
     ),
   { functional: true }
 );
+
+export const deleteTaskEffect = createEffect(
+  (actions$ = inject(Actions), taskLogApiService = inject(TaskLogApiService)) =>
+    actions$.pipe(
+      ofType(TaskLogActions.deleteTask),
+      exhaustMap(({ taskId }) =>
+        taskLogApiService.deleteTask(taskId).pipe(
+          map(() => TaskLogActions.didDeleteTask({ taskId })),
+          catchError((error: unknown) => EMPTY)
+        )
+      )
+    ),
+  { functional: true }
+);

@@ -23,4 +23,8 @@ export class TaskLogApiService {
   updateTask(taskId: number, update: TaskDraft): Observable<Task> {
     return this.http.patch<Task>(`${this.route}/${taskId}`, update);
   }
+
+  deleteTask(taskId: number): Observable<void> {
+    return this.http.delete<void>(`${this.route}/${taskId}`);
+  }
 }

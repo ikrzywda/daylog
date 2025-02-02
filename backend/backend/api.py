@@ -78,6 +78,9 @@ class TaskStorageService:
             raise Exception("Failed to deserialize tasks") from e
         with open(self.storage_path, "w") as f:
             f.write(dumped_tasks)
+
+    def _find_task(self, task_id: int) -> Optional[Task]:
+        return next((task for task in self.tasks if task.id == task_id), None)
     
     def create_and_add_task_to_storage(self, draft: TaskBase) -> Task:
         task = Task(**draft.model_dump(), created_at=datetime.now(tz=timezone.utc).isoformat(), id=randint(1, 10000))
@@ -86,8 +89,7 @@ class TaskStorageService:
         return task
     
     def update_task(self, id: int, update: TaskUpdate) -> Task:
-        print(update)
-        task_to_update = next((task for task in self.tasks if task.id == id), None)
+        task_to_update = self._find_task(id)
         if task_to_update is None:
             raise Exception(f"Did not find task with id {id}")
         updated_draft = task_to_update.model_dump()
@@ -100,6 +102,12 @@ class TaskStorageService:
         print(updated_task)
         self.tasks = [task if task.id != id else updated_task for task in self.tasks]
         return updated_task
+    
+    def delete_task(self, task_id: int):
+        task = self._find_task(task_id)
+        if task is None:
+            raise Exception(f"Did not find task with id {id}")
+        self.tasks = [task for task in self.tasks if task.id != task_id]
 
 def get_task_storage_service_dep() -> TaskStorageService:
     return TaskStorageService()
@@ -125,3 +133,11 @@ async def update_task(
     task_storage_service: TaskStorageService = Depends(get_task_storage_service_dep)
 ) -> Task:
     return task_storage_service.update_task(task_id, payload)
+
+
+@app.delete("/tasks/{task_id}", status_code=204)
+async def delete_task(
+    task_id: int,
+    task_storage_service: TaskStorageService = Depends(get_task_storage_service_dep)
+):
+    task_storage_service.delete_task(task_id)

@@ -32,7 +32,6 @@ export class TaskListComponent {
   }
 
   handleEdit(task: Task) {
-    console.log('OPEINING', task);
     const dialogRef = this.dialog.open(DialogTaskInputDialogComponent, {
       data: task,
     });
@@ -46,5 +45,7 @@ export class TaskListComponent {
     });
   }
 
-  handleDelete(taskId: number) {}
+  handleDelete(taskId: number) {
+    this.taskLogService.deleteTask(taskId);
+  }
 }

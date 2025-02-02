@@ -31,7 +31,7 @@ export const taskLogReducer = createReducer(
     ...state,
     tasks: [...state.tasks, task],
   })),
-  on(TaskLogActions.didRemoveTask, (state, { taskId }) => ({
+  on(TaskLogActions.didDeleteTask, (state, { taskId }) => ({
     ...state,
     tasks: state.tasks.filter(({ id }) => id !== taskId),
   })),

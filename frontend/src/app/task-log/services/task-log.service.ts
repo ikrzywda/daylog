@@ -26,4 +26,8 @@ export class TaskLogService {
   updateTask(taskId: number, update: TaskDraft) {
     this.store.dispatch(TaskLogActions.updateTask({ taskId, update }));
   }
+
+  deleteTask(taskId: number) {
+    this.store.dispatch(TaskLogActions.deleteTask({ taskId }));
+  }
 }
