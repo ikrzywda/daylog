@@ -1,9 +1,0 @@
-<div>
-  <app-task-input></app-task-input>
-  <ul>
-    <li *ngFor="let task of (taskLogService.tasks$ | async) || []">
-      {{ task.title }}
-    </li>
-    <li *ngIf="(taskLogService.tasks$ | async) === null">Loading...</li>
-  </ul>
-</div>
