@@ -9,6 +9,7 @@ import { TaskListItemComponent } from './task-list-item/task-list-item.component
 import { Task, TaskDraft } from '../../task-log.models';
 import { DialogTaskInputDialogComponent } from '../task-input-dialog/task-input-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-task-list',
@@ -17,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatListModule,
     MatButtonModule,
     TaskListItemComponent,
+    MatIconModule,
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss',
@@ -29,6 +31,17 @@ export class TaskListComponent {
     readonly dialog: MatDialog
   ) {
     this.taskLogService.loadTasks();
+  }
+
+  handleAdd() {
+    const dialogRef = this.dialog.open(DialogTaskInputDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed', result);
+      if (result !== undefined) {
+        this.taskLogService.addTask(result);
+      }
+    });
   }
 
   handleEdit(task: Task) {

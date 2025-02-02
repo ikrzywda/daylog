@@ -99,8 +99,8 @@ class TaskStorageService:
                 updated_draft[key] = value
 
         updated_task = Task(**updated_draft)
-        print(updated_task)
         self.tasks = [task if task.id != id else updated_task for task in self.tasks]
+        self._save_to_storage()
         return updated_task
     
     def delete_task(self, task_id: int):
@@ -108,6 +108,7 @@ class TaskStorageService:
         if task is None:
             raise Exception(f"Did not find task with id {id}")
         self.tasks = [task for task in self.tasks if task.id != task_id]
+        self._save_to_storage()
 
 def get_task_storage_service_dep() -> TaskStorageService:
     return TaskStorageService()
