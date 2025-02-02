@@ -10,7 +10,6 @@ export interface Task {
   title: string;
   contents: string;
   durationSeconds: number;
-  categories: string[];
   createdAt: Date;
 }
 

@@ -1,0 +1,8 @@
+<title mat-dialog-title>Hello</title>
+<mat-dialog-content>
+  <app-task-input [(taskDraft)]="taskDraft" />
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="handleClose()">Cancel</button>
+  <button mat-button (click)="handleSave()">Add</button>
+</mat-dialog-actions>

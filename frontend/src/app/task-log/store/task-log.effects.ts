@@ -31,3 +31,17 @@ export const loadTasksEffect = createEffect(
     ),
   { functional: true }
 );
+
+export const addTaskEffect = createEffect(
+  (actions$ = inject(Actions), taskLogApiService = inject(TaskLogApiService)) =>
+    actions$.pipe(
+      ofType(TaskLogActions.addTask),
+      exhaustMap(({ draft }) =>
+        taskLogApiService.createTask(draft).pipe(
+          map((task) => TaskLogActions.didAddTask({ task })),
+          catchError((error: unknown) => EMPTY)
+        )
+      )
+    ),
+  { functional: true }
+);

@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 import json
 from logging import Logger
 from pathlib import Path
+from random import randint
 from typing import Any, Final
 from fastapi import Depends, FastAPI
 from pydantic import AliasChoices, AliasGenerator, BaseModel, ConfigDict
@@ -32,12 +33,12 @@ class CamelSerializableBaseModel(BaseModel):
 
 
 class TaskBase(CamelSerializableBaseModel):
-    id: int
     title: str
     contents: str
     duration_seconds: int
 
 class Task(TaskBase):
+    id: int
     created_at: str
 
 
@@ -74,7 +75,7 @@ class TaskStorageService:
             f.write(dumped_tasks)
     
     def create_and_add_task_to_storage(self, draft: TaskBase) -> Task:
-        task = Task(**draft.model_dump(), created_at=datetime.now(tz=timezone.utc).isoformat())
+        task = Task(**draft.model_dump(), created_at=datetime.now(tz=timezone.utc).isoformat(), id=randint(1, 10000))
         self.tasks.append(task)
         self._save_to_storage()
         return task

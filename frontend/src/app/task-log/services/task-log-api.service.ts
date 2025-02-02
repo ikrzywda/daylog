@@ -16,14 +16,7 @@ export class TaskLogApiService {
     return this.http.get<Task[]>(this.route);
   }
 
-  createTask(draft: TaskDraft) {
-    this.http
-      .post(this.route, draft)
-      .pipe(
-        tap(() => {
-          this.taskAdded$.next();
-        })
-      )
-      .subscribe();
+  createTask(draft: TaskDraft): Observable<Task> {
+    return this.http.post<Task>(this.route, draft);
   }
 }

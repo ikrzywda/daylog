@@ -1,16 +1,20 @@
 <form (submit)="$event.preventDefault()" [formGroup]="taskInputFormGroup">
-  <mat-form-field>
-    <mat-label>Title</mat-label>
-    <input matInput formControlName="title" />
-  </mat-form-field>
+  <div class="header-container">
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Duration</mat-label>
+      <input matInput formControlName="durationSeconds" />
+    </mat-form-field>
+  </div>
+
   <mat-form-field>
     <mat-label>Contents</mat-label>
-    <textarea matInput formControlName="name"></textarea>
+    <textarea matInput formControlName="contents"></textarea>
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>Duration</mat-label>
-    <input matInput formControlName="durationSeconds" />
-  </mat-form-field>
+
   <button mat-fab extended>
     <mat-icon>add</mat-icon>
     add
