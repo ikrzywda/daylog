@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
-import { Task, TaskDraft } from './task';
+import { Task, TaskDraft } from '$shared/models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TaskLogService {
+export class TaskLogApiService {
   private http = inject(HttpClient);
   private readonly route: string = 'http://localhost:4101/tasks';
 
