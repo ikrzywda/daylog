@@ -3,12 +3,9 @@ from typing import Optional
 
 from fastapi import Depends, FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import Field
-
 
 from .schemas import PaginationParams, PaginationResult, Task, TaskBase, TaskUpdate
 from .services import TaskStorageService, get_task_storage_service_dep
-
 
 app = FastAPI()
 

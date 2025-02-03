@@ -22,7 +22,6 @@ export class TaskLogApiService {
   }
 
   getTasks(searchParams: SearchParams): Observable<PaginationResult<Task>> {
-    s;
     return this.http.get<PaginationResult<Task>>(`${this.route}/paginated`, {
       params: { ...searchParams },
     });
