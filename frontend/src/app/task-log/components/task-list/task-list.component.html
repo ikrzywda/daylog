@@ -8,6 +8,12 @@
     (onEdit)="handleEdit(task)"
   />
 </mat-action-list>
+<mat-paginator
+  [length]="(paginationState$ | async)?.itemsCount || 0"
+  [pageSize]="(paginationState$ | async)?.pageSize || 0"
+  [pageSizeOptions]="[1, 5, 10, 25, 100]"
+  (page)="handlePageChange($event)"
+/>
 
 <button mat-fab color="primary" (click)="handleAdd()">
   <mat-icon>add</mat-icon>

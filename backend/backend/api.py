@@ -1,8 +1,9 @@
 from datetime import datetime
 from typing import Optional
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import Field
 
 
 from .schemas import PaginationParams, PaginationResult, Task, TaskBase, TaskUpdate
@@ -22,10 +23,10 @@ app.add_middleware(
 
 def pagination_params_dep(
     page: int = 1,
-    page_size: int = 25,
-    search: Optional[str] = None,
-    date_from: Optional[datetime] = None,
-    date_to: Optional[datetime] = None,
+    page_size: int = Query(alias="pageSize", default=25),
+    search: Optional[str] = Query(alias="search", default=None),
+    date_from: Optional[datetime] = Query(alias="dateFrom", default=None),
+    date_to: Optional[datetime] = Query(alias="dateTo", default=None),
 ) -> PaginationParams:
     return PaginationParams(
         page=page,

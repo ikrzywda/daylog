@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
-import { Task, TaskDraft } from '../task-log.models';
+import {
+  PaginationResult,
+  SearchParams,
+  Task,
+  TaskDraft,
+} from '../task-log.models';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +19,13 @@ export class TaskLogApiService {
 
   getAllTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.route);
+  }
+
+  getTasks(searchParams: SearchParams): Observable<PaginationResult<Task>> {
+    console.log('SEARCH PARAMS', searchParams);
+    return this.http.get<PaginationResult<Task>>(`${this.route}/paginated`, {
+      params: { ...searchParams },
+    });
   }
 
   createTask(draft: TaskDraft): Observable<Task> {

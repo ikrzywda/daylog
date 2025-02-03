@@ -1,3 +1,10 @@
+export interface PaginationResult<T> {
+  page: number;
+  pageSize: number;
+  count: number;
+  data: T[];
+}
+
 export interface Range<T> {
   start: T;
   end: T;
@@ -17,6 +24,17 @@ export type TaskDraft = Omit<Task, 'id' | 'createdAt'>;
 export type TaskUpdate = Partial<TaskDraft>;
 
 export interface TaskSearchQuery {
-  search: string | null;
-  timeRange: TimeRange | null;
+  search?: string;
+  dateFrom?: string;
+  dateTo?: string;
 }
+
+export interface PaginationState {
+  pageSize: number;
+  page: number;
+  itemsCount: number;
+}
+
+export type SearchParams =
+  | Omit<PaginationState, 'itemsCount'>
+  | TaskSearchQuery;

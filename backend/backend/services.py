@@ -49,6 +49,7 @@ class TaskStorageService:
     def get_paginated(
         self, pagination_params: PaginationParams
     ) -> PaginationResult[Task]:
+        print(pagination_params)
         def filter_task_predicate(
             task: Task, pagination_params: PaginationParams
         ) -> bool:
