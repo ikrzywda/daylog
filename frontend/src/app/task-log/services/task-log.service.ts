@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TaskLogActions } from '../store/task-log.actions';
 import { Observable } from 'rxjs';
-import { PaginationState, Task, TaskDraft } from '../task-log.models';
+import {
+  PaginationState,
+  SearchParams,
+  Task,
+  TaskDraft,
+  TaskSearchQuery,
+} from '../task-log.models';
 import {
   selectPaginationState,
   selectTasks,
@@ -32,5 +38,9 @@ export class TaskLogService {
 
   deleteTask(taskId: number) {
     this.store.dispatch(TaskLogActions.deleteTask({ taskId }));
+  }
+
+  updateSearch(searchParams: Partial<SearchParams>) {
+    this.store.dispatch(TaskLogActions.updateSearchParams(searchParams));
   }
 }

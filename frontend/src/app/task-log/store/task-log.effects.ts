@@ -53,7 +53,6 @@ export const loadTasksEffectPaginated = createEffect(
       ofType(TaskLogActions.loadTasks),
       withLatestFrom(store.select(selectSearchParams)),
       exhaustMap(([, state]) => {
-        console.log('STATE', state);
         return taskLogApiService.getTasks(state).pipe(
           map((paginatedResult) =>
             TaskLogActions.didLoadTasksSuccess({ paginatedResult })

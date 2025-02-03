@@ -1,0 +1,12 @@
+<div class="actions-container">
+  <form (submit)="$event.preventDefault()" [formGroup]="formGroup">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput formControlName="search" />
+    </mat-form-field>
+  </form>
+  <button mat-fab extended (click)="handleAdd()">
+    <mat-icon>add</mat-icon>
+    Add task
+  </button>
+</div>

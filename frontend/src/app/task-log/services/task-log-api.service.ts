@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import {
   PaginationResult,
   SearchParams,
@@ -22,7 +22,7 @@ export class TaskLogApiService {
   }
 
   getTasks(searchParams: SearchParams): Observable<PaginationResult<Task>> {
-    console.log('SEARCH PARAMS', searchParams);
+    s;
     return this.http.get<PaginationResult<Task>>(`${this.route}/paginated`, {
       params: { ...searchParams },
     });

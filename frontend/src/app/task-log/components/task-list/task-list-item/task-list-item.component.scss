@@ -1,7 +1,10 @@
+/* Task List Item Styling */
 .task-list-item {
   display: flex;
-  justify-content: space-between; /* Space out title, duration, and actions */
-  align-items: center; /* Vertically center the content */
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  padding: 8px;
 }
 
 .header-container {
@@ -11,5 +14,17 @@
 
 .actions-container {
   display: flex;
-  gap: 8px; /* Add some space between the buttons */
+  gap: 8px;
+}
+
+.task-list {
+  max-height: 500px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.pagination-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56px;
 }

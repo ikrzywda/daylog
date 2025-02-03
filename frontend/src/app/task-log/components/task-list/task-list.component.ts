@@ -15,6 +15,7 @@ import { DialogTaskInputDialogComponent } from '../task-input-dialog/task-input-
 import { TaskListItemComponent } from './task-list-item/task-list-item.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { TaskLogActions } from '../../store/task-log.actions';
+import { TaskActionsComponent } from './task-actions/task-actions.component';
 
 @Component({
   selector: 'app-task-list',
@@ -25,6 +26,7 @@ import { TaskLogActions } from '../../store/task-log.actions';
     TaskListItemComponent,
     MatIconModule,
     MatPaginatorModule,
+    TaskActionsComponent,
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss',
@@ -44,7 +46,6 @@ export class TaskListComponent {
     const dialogRef = this.dialog.open(DialogTaskInputDialogComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
       if (result !== undefined) {
         this.taskLogService.addTask(result);
       }
@@ -57,9 +58,7 @@ export class TaskListComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
       if (result !== undefined) {
-        console.log('RESULT', result);
         this.taskLogService.updateTask(task.id, result);
       }
     });

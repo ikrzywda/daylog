@@ -1,20 +1,19 @@
-<mat-action-list
-  class="task-list-item"
-  *ngFor="let task of (tasks$ | async) || []"
->
-  <app-task-list-item
-    [task]="task"
-    (onDelete)="handleDelete(task.id)"
-    (onEdit)="handleEdit(task)"
-  />
-</mat-action-list>
+<app-task-actions [ngClass]="'task-actions'"></app-task-actions>
+
+<div [ngClass]="'task-list-container'">
+  <mat-action-list *ngFor="let task of (tasks$ | async) || []">
+    <app-task-list-item
+      [task]="task"
+      (onDelete)="handleDelete(task.id)"
+      (onEdit)="handleEdit(task)"
+    />
+  </mat-action-list>
+</div>
+
 <mat-paginator
+  [ngClass]="'task-paginator'"
   [length]="(paginationState$ | async)?.itemsCount || 0"
   [pageSize]="(paginationState$ | async)?.pageSize || 0"
   [pageSizeOptions]="[1, 5, 10, 25, 100]"
   (page)="handlePageChange($event)"
-/>
-
-<button mat-fab color="primary" (click)="handleAdd()">
-  <mat-icon>add</mat-icon>
-</button>
+></mat-paginator>

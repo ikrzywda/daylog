@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
 import { TaskLogModule } from './task-log/task-log.module';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { TaskListComponent } from './task-log/components/task-list/task-list.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TaskLogModule, MatToolbarModule, TaskListComponent],
+  imports: [RouterOutlet, TaskLogModule, MatToolbarModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

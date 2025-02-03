@@ -6,6 +6,7 @@
 
 - [x] Project boilerplate
 - [x] CRUD on tasks
+- [x] Search & Pagination for tasks
 - [ ] Displaying tasks within selected time range
 - [ ] Charts with rundowns
 - [ ] Original estimation field in tasks

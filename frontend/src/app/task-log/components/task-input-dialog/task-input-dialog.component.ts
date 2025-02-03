@@ -40,7 +40,6 @@ export class TaskInputDialog {
     const dialogRef = this.dialog.open(DialogTaskInputDialogComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
       if (result !== undefined) {
         this.taskLogService.addTask(result);
       }
@@ -66,7 +65,6 @@ export class DialogTaskInputDialogComponent {
     @Inject(MAT_DIALOG_DATA) private data: TaskDraft,
     private readonly dialogRef: MatDialogRef<DialogTaskInputDialogComponent>
   ) {
-    console.log('DATGA', data);
     this.taskDraft = { ...this.data };
   }
 

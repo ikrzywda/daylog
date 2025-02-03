@@ -35,6 +35,5 @@ export interface PaginationState {
   itemsCount: number;
 }
 
-export type SearchParams =
-  | Omit<PaginationState, 'itemsCount'>
-  | TaskSearchQuery;
+export type SearchParams = TaskSearchQuery &
+  Omit<PaginationState, 'itemsCount'>;
